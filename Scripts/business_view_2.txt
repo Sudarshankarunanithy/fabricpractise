@@ -1,0 +1,13 @@
+USE ansh_DWH 
+GO
+CREATE VIEW gold.business_view_2
+AS
+SELECT * FROM
+(
+SELECT 
+    *,
+    DENSE_RANK() OVER (PARTITION BY payment_type ORDER BY payment_value) as bucket_ranking
+FROM 
+    ansh_DWH.gold.cur_payments
+) T
+WHERE bucket_ranking <= 10

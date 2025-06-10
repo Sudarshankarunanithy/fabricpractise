@@ -1,0 +1,40 @@
+CREATE TABLE ansh_DWH.dbo.dummy_table
+(
+    Branch_ID VARCHAR(255) NULL,
+    Dealer_ID VARCHAR(255) NULL,
+    Model_ID VARCHAR(255) NULL,
+    Revenue BIGINT NULL,
+    Units_Sold BIGINT NULL,
+    Date_ID VARCHAR(255) NULL,
+    Day INT NULL,
+    Month INT NULL,
+    Year INT NULL,
+    BranchName VARCHAR(255) NULL,
+    DealerName VARCHAR(255) NULL,
+    Model_Category VARCHAR(255) NULL,
+    RevPerUnit FLOAT NULL
+);
+
+---------------------
+-- COPY INTO COMMAND
+---------------------
+
+COPY INTO ansh_DWH.dbo.dummy_table 
+FROM 'https://dp700anshdatalake.blob.core.windows.net/raw/source_data/part-00000-tid-1594937361632335988-9e00517f-de1c-480a-8541-bc8539c0b95c-12-1-c000.snappy.parquet' 
+WITH 
+(
+    FILE_TYPE = 'PARQUET'
+)
+
+--------------------
+-- SELECT STATEMENT
+--------------------
+SELECT * FROM ansh_DWH.dbo.dummy_table
+
+
+
+
+
+
+
+

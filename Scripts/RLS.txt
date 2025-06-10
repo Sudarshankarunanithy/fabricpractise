@@ -1,0 +1,54 @@
+CREATE TABLE dbo.[Sales] 
+(
+    SalesID INT, 
+    ProductID INT, 
+    TenantName VARCHAR(50)
+)
+GO
+
+INSERT INTO dbo.[Sales]  VALUES (1, 3, 'tenant1@xyz.com');
+INSERT INTO dbo.[Sales]  VALUES (2, 4, 'tenant2@xyz.com');
+INSERT INTO dbo.[Sales]  VALUES (3, 7, 'tenant3@xyz.com');
+INSERT INTO dbo.[Sales]  VALUES (4, 2, 'tenant4@xyz.com');
+INSERT INTO dbo.[Sales]  VALUES (5, 9, 'test_user@anshlambaazgmail.onmicrosoft.com');
+
+
+-------
+-- RLS
+-------
+--Create a schema
+CREATE SCHEMA [sec];  
+GO  
+
+
+--Create the filter predicate
+CREATE FUNCTION sec.tvf_SecurityPredicatebyTenant(@TenantName AS NVARCHAR(200))  
+    RETURNS TABLE  
+WITH SCHEMABINDING  
+AS  
+    RETURN	SELECT 1 AS result
+			WHERE @TenantName = USER_NAME() OR USER_NAME() = 'fabricdp700@anshlambaazgmail.onmicrosoft.com';  
+GO
+
+
+
+--Create security policy and add the filter predicate
+CREATE SECURITY POLICY sec.SalesPolicy 
+ADD FILTER PREDICATE sec.tvf_SecurityPredicatebyTenant(TenantName) ON [dbo].[Sales]
+WITH (STATE = ON);  
+GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
