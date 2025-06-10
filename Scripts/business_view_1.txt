@@ -1,0 +1,45 @@
+CREATE VIEW gold.business_view_1 
+AS 
+WITH CTE1 AS 
+(
+SELECT T1.*, T2.weight_flag
+FROM 
+(
+SELECT 
+    O.order_id,
+    OI.product_id 
+FROM 
+    ansh_DWH.gold.cur_orders O
+LEFT JOIN 
+    ansh_DWH.gold.cur_orderitems OI 
+    ON 
+        O.order_id = OI.order_id
+WHERE 
+    order_status = 'delivered'
+
+) T1
+LEFT JOIN 
+(
+SELECT
+    product_id,
+    poduct_weight_g,
+    CASE 
+    WHEN poduct_weight_g <= 1000 THEN 'Low' 
+    WHEN poduct_weight_g <=5000 THEN 'Mid' 
+    ELSE 'High' END AS weight_flag
+FROM 
+    ansh_DWH.gold.cur_products
+) T2
+ON 
+    T1.product_id = T2.product_id
+)
+SELECT 
+    weight_flag, 
+    count(order_id) as total_orders
+FROM 
+    CTE1 
+GROUP BY 
+    weight_flag 
+
+
+

@@ -1,0 +1,19 @@
+----------------
+-- CREATING ROLE
+----------------
+CREATE ROLE dataanalysts AUTHORIZATION dbo; 
+
+---------------------
+-- ADDING THE MEMBERS
+----------------------
+ALTER ROLE dataanalysts 
+ADD MEMBER [test_user@anshlambaazgmail.onmicrosoft.com];
+
+
+-------
+-- CLS
+-------
+DENY SELECT ON gold.cur_customers (unique_id) TO dataanalysts;
+
+
+

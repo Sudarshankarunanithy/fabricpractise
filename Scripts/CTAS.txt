@@ -1,0 +1,57 @@
+----------------------
+-- CREATE GOLD SCHEMA
+----------------------
+USE ansh_DWH
+GO
+CREATE SCHEMA gold
+
+---------------------
+-- CTAS enr_customers
+---------------------
+CREATE TABLE ansh_DWH.gold.cur_customers
+AS 
+SELECT * FROM Silver_LH.dbo.enr_customers
+
+---------------------
+-- CTAS enr_orderitems
+---------------------
+CREATE TABLE ansh_DWH.gold.cur_orderitems
+AS 
+SELECT * FROM Silver_LH.dbo.enr_orderitems
+
+---------------------
+-- CTAS enr_order
+---------------------
+CREATE TABLE ansh_DWH.gold.cur_orders
+AS 
+SELECT * FROM Silver_LH.dbo.enr_orders
+
+
+---------------------
+-- CTAS enr_payments
+---------------------
+CREATE TABLE ansh_DWH.gold.cur_payments
+AS
+SELECT * FROM Silver_LH.dbo.enr_payments
+
+
+
+---------------------
+-- CTAS enr_products
+---------------------
+CREATE TABLE ansh_DWH.gold.cur_products
+AS
+SELECT * FROM Silver_LH.dbo.enr_products
+
+
+---------------------
+-- CTAS enr_reviews
+---------------------
+CREATE TABLE ansh_DWH.gold.cur_reviews
+AS
+SELECT * FROM Silver_LH.dbo.enr_reviews
+
+
+
+
+
